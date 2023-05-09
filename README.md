@@ -28,8 +28,9 @@ Usage
 ```php
 use Proxity\Logger\Logger;
 use Proxity\Logger\Handler\ConsoleHandler;
-
-$logger = new Logger('channel',[new ConsoleHandler()]);
+use \Proxity\Logger\Level;
+$logger = new Logger('channel',[new ConsoleHandler()]); //by default Level::Debug is set. You can override this like in the set call below.
+$logger->setLevel(Level::Debug); 
 $logger->addHandler(new ConsoleHandler());
 $logger->debug('Log something for debug');
 ```
