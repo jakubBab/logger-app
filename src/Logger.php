@@ -6,17 +6,16 @@ namespace Proxity\Logger;
 
 use Proxity\Logger\Handler\HandlerInterface;
 use Psr\Log\LoggerInterface;
-use Psr\Log\LoggerTrait;
 use Stringable;
 
 final class Logger implements LoggerInterface
 {
-    use LoggerTrait;
-
     /**
      * @var HandlerInterface[]
      */
     private array $handlers;
+
+    private ?Level $level;
 
     /**
      * @param string $name
@@ -26,8 +25,9 @@ final class Logger implements LoggerInterface
     public function __construct(
         public readonly string $name,
         array $handlers = [],
-        private readonly ?Level $level = null
+        ?Level $level = null
     ) {
+        $this->level = $level;
         $this->setHandlers($handlers);
     }
 
@@ -60,6 +60,15 @@ final class Logger implements LoggerInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @param Level|null $level
+     * @return void
+     */
+    public function setLevel(?Level $level): void
+    {
+        $this->level = $level;
     }
 
     /**
@@ -219,9 +228,9 @@ final class Logger implements LoggerInterface
 
         if (is_null($level)) {
             throw new \InvalidArgumentException('Level "' . $level . '" is not defined, use one of: ' . implode(
-                ', ',
-                Level::VALUES
-            ));
+                    ', ',
+                    Level::VALUES
+                ));
         }
 
         return $level;
