@@ -11,20 +11,28 @@ Features
 * Multiple logging levels on application and handler level
 
 
+Available commands
+-----
+
+
+```php
+composer run phpunit
+composer run phpstan
+composer run style
+```
+
 
 Usage
 -----
 
 ```php
-use \Azurre\Component\Logger;
-use \Azurre\Component\Logger\Handler\File;
+use Proxity\Logger\Logger;
+use Proxity\Logger\Handler\ConsoleHandler;
 
 $logger = new Logger('channel',[new ConsoleHandler()]);
-$logger->addHandler(new FileHandler());
+$logger->addHandler(new ConsoleHandler());
 $logger->debug('Log something for debug');
 ```
-
-
 
 Logger output
 ```
@@ -33,10 +41,11 @@ Logger output
 
 Extra points
 -----
-[lock component](https://symfony.com/doc/current/components/lock.html)
+
 Improvements
 
-1. Introduce processors and apply before handlers to re-define given logRecord 
+1. The app is not production ready. It does meet criteria given in the task however further work is required. 
+2. Introduce processors and apply before handlers to re-define given logRecord 
 2. User fibers for heavy processes. However, it will add extra complexity to the app 
 3. Add support for locked resources. Add [lock component](https://symfony.com/doc/current/components/lock.html)  or apply wait&try mechanism and on general fail implement fall-back option
 4. Improve formatters for clearer output eg. titles etc.
@@ -55,4 +64,4 @@ foreach ($handlersToUse as $handler) {
     $handler->handle($record);
 }
 ```
-Complexity would be O(k) where k is the number of current records.
+Complexity would be O(k) where k is the number of handlers "eligible" to handle current record
