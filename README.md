@@ -39,6 +39,28 @@ Logger output
 5393    test    test message    []      250     NOTICE  2023-05-09 15:02:41
 ```
 
+When global level is passed to logger, all levels passed to handler will be ignored. In this example only Notice level will be output
+```php
+use Proxity\Logger\Logger;
+use Proxity\Logger\Handler\ConsoleHandler;
+
+$logger = new Logger('btc', [new ConsoleHandler()], Level::Notice);
+$logger->addHandler(new ConsoleHandler(Level::Debug));
+$logger->addHandler(new ConsoleHandler(Level::Notice));
+$logger->debug('Log something for debug');
+```
+
+When global level is not set, local level will be handled. Only notice will be handled
+```php
+use Proxity\Logger\Logger;
+use Proxity\Logger\Handler\ConsoleHandler;
+
+$logger = new Logger('btc', [new ConsoleHandler()]);
+$logger->addHandler(new ConsoleHandler(Level::Debug));
+$logger->addHandler(new ConsoleHandler(Level::Notice));
+$logger->notice('Log something for debug');
+```
+
 Extra points
 -----
 
