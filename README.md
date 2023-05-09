@@ -38,7 +38,7 @@ $logger->debug('Log something for debug');
 
 Logger output
 ```
-5393    test    test message    []      250     NOTICE  2023-05-09 15:02:41
+5393    channel    Log something for debug    []      100     DEBUG  2023-05-09 15:02:41
 ```
 
 When global level is passed to logger, all levels passed to handler will be ignored. In this example only Notice level will be output
